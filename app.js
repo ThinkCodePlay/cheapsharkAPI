@@ -2,6 +2,8 @@ const express = require("express");
 require("./db/mongoose");
 
 const app = express();
+app.use(express.json())
+
 const {
   listOfGames,
   dealsForGame,
@@ -32,7 +34,8 @@ app.get("/game-deals", async (req, res) => {
 });
 
 app.post("/wishlist", async (req, res) => {
-  const result = await wishlist({ title: req.query.title, gameID: req.query.gameID });
+
+  const result = await wishlist({ title: req.body.title, gameID: req.body.gameID });
 
   if (result.error) {
     return res.status(400).send("Error storing game");

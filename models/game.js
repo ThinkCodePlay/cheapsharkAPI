@@ -10,6 +10,7 @@ const gameSchema = new mongoose.Schema(
     gameID: {
       type: Number,
       required: true,
+      unique: true
     },
   },
   {
