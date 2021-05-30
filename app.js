@@ -1,59 +1,15 @@
 const express = require("express");
-require("./db/mongoose");
-
+const cors = require("cors");
 const app = express();
-app.use(express.json())
+require("./db/mongoose");
+const gameRouter = require('./routes/gameRoute')
 
-const {
-  listOfGames,
-  dealsForGame,
-  wishlist,
-  getWishlist
-} = require("./utils/cheapshark");
+var corsOptions = {
+  credentials: true,
+  origin: "http://localhost:4200",
+};
+app.use(cors(corsOptions));
+app.use(express.json());
+app.use(gameRouter)
 
-const port = process.env.PORT || 3000;
-
-app.get("/games-list", async (req, res) => {
-  const result = await listOfGames({ title: req.query.title });
-
-  if (result.error) {
-    return res.status(400).send("Error getting information");
-  }
-
-  res.send(result);
-});
-
-app.get("/game-deals", async (req, res) => {
-  const result = await dealsForGame({ id: req.query.id });
-
-  if (result.error) {
-    return res.status(400).send("Error getting information");
-  }
-
-  res.send(result);
-});
-
-app.post("/wishlist", async (req, res) => {
-
-  const result = await wishlist({ title: req.body.title, gameID: req.body.gameID });
-
-  if (result.error) {
-    return res.status(400).send("Error storing game");
-  }
-
-  res.send(result);
-});
-
-app.get("/get-wishlist", async (req, res) => {
-  const result = await getWishlist();
-
-  if (result.error) {
-    return res.status(400).send("Error getting information");
-  }
-
-  res.send(result);
-});
-
-app.listen(port, () => {
-  console.log("Server is up on port " + port);
-});
+module.exports = app

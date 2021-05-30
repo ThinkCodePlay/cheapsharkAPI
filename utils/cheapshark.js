@@ -39,7 +39,7 @@ const wishlist = async (params) => {
 
 const getWishlist = async (req, res) => {
     try {
-        const wishlistGames = Game.find();
+        const wishlistGames = await Game.find();
         return wishlistGames;
     } catch (error) {
         {error}

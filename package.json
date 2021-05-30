@@ -1,23 +1,29 @@
 {
-  "name": "node-weather-api",
+  "name": "cheapshark-api",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "env-cmd -f ./config/.env nodemon app.js",
+    "start": "node index.js",
+    "dev": "env-cmd -f ./config/.env nodemon index.js",
+    "test": "env-cmd -f ./config/test.env jest --watch --runInBand",
     "mongo": "D:/Documents/mongodb/bin/mongod.exe --dbpath=D:/Documents/mongodb-data"
+  },
+  "jest": {
+    "testEnvironment": "node"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongoose": "^5.12.4"
   },
   "devDependencies": {
     "env-cmd": "^10.1.0",
+    "jest": "^26.6.3",
     "nodemon": "^2.0.7"
   }
 }
