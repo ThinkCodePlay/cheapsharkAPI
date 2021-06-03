@@ -10,7 +10,12 @@ const gameSchema = new mongoose.Schema(
     gameID: {
       type: Number,
       required: true,
-      unique: true
+      unique: true,
+    },
+    owner: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: "User",
     },
   },
   {

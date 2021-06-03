@@ -1,4 +1,5 @@
 const express = require("express");
+const auth = require("../middleware/auth");
 
 const router = new express.Router();
 
@@ -29,10 +30,11 @@ router.get("/game-deals", async (req, res) => {
   res.send(result);
 });
 
-router.post("/wishlist", async (req, res) => {
+router.post("/wishlist", auth, async (req, res) => {
   const result = await wishlist({
     title: req.body.title,
     gameID: req.body.gameID,
+    owner: req.user._id
   });
 
   if (result.error) {
@@ -42,8 +44,9 @@ router.post("/wishlist", async (req, res) => {
   res.send(result);
 });
 
-router.get("/get-wishlist", async (req, res) => {
-  const result = await getWishlist();
+router.get("/get-wishlist", auth ,async (req, res) => {
+
+  const result = await getWishlist(req.user);
 
   if (result.error) {
     return res.status(400).send("Error getting information");

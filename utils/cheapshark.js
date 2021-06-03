@@ -26,31 +26,37 @@ const dealsForGame = async (params) => {
 };
 
 const wishlist = async (params) => {
-  const game = new Game({ ...params  });
+  const game = new Game({ ...params });
 
   try {
     const state = await game.save();
     return game;
   } catch (error) {
-    return {error};
+    return { error };
   }
-
 };
 
-const getWishlist = async (req, res) => {
-    try {
-        const wishlistGames = await Game.find();
-        return wishlistGames;
-    } catch (error) {
-        {error}
+const getWishlist = async (user) => {
+  try {
+    await user
+      .populate({
+        path: "games",
+      })
+      .execPopulate();
+    return user.games;
+  } 
+  catch (error) {
+    {
+      error;
     }
-}
+  }
+};
 
 module.exports = {
   listOfGames,
   dealsForGame,
   wishlist,
-  getWishlist
+  getWishlist,
 };
 
 // const dealID = async (params) => {
