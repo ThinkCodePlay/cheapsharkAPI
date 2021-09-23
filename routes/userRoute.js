@@ -1,6 +1,6 @@
 const express = require('express')
 const User = require('../models/user')
-const auth = require('../middleware/auth')
+// const auth = require('../middleware/auth')
 const router = new express.Router()
 
 router.post('/user', async (req, res) => {
@@ -23,21 +23,19 @@ router.post('/user/login', async (req, res) => {
         res.cookie("TOKEN", token)
         res.send()
     } catch (e) {
-        res.status(400).send()
+        res.status(400).send(e)
     }
 })
 
-// router.post('/user/logout', auth, async (req, res) => {
-//     try {
-//         req.user.tokens = null;
-//         await req.user.save()
-
-//         res.send()
-//     } catch (e) {
-//         res.status(500).send()
-//     }
-// })
-
+router.post('/user/logout', async (req, res) => {
+    try {
+        console.log("loging out");
+        res.clearCookie("TOKEN")
+        res.send()
+    } catch (e) {
+        res.status(400).send(e)
+    }
+})
 
 
 module.exports = router

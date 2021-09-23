@@ -7,7 +7,7 @@ const userRoute = require('./routes/userRoute')
 
 var corsOptions = {
   credentials: true,
-  origin: "http://localhost:4200",
+  origin: ["http://localhost:4200","http://localhost:3001"],
 };
 app.use(cors(corsOptions));
 app.use(express.json());

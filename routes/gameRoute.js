@@ -10,31 +10,31 @@ const {
   getWishlist,
 } = require("../utils/cheapshark");
 
-router.get("/games-list", async (req, res) => {
-  const result = await listOfGames({ title: req.query.title });
+// router.get("/games-list", auth, async (req, res) => {
+//   const result = await listOfGames({ title: req.query.title });
 
-  if (result.error) {
-    return res.status(400).send("Error getting information");
-  }
+//   if (result.error) {
+//     return res.status(400).send("Error getting information");
+//   }
 
-  res.send(result);
-});
+//   res.send(result);
+// });
 
-router.get("/game-deals", async (req, res) => {
-  const result = await dealsForGame({ id: req.query.id });
+// router.get("/game-deals", auth ,async (req, res) => {
+//   const result = await dealsForGame({ id: req.query.id });
 
-  if (result.error) {
-    return res.status(400).send("Error getting information");
-  }
+//   if (result.error) {
+//     return res.status(400).send("Error getting information");
+//   }
 
-  res.send(result);
-});
+//   res.send(result);
+// });
 
 router.post("/wishlist", auth, async (req, res) => {
   const result = await wishlist({
     title: req.body.title,
     gameID: req.body.gameID,
-    owner: req.user._id
+    owner: req.user._id,
   });
 
   if (result.error) {
@@ -44,15 +44,23 @@ router.post("/wishlist", auth, async (req, res) => {
   res.send(result);
 });
 
-router.get("/get-wishlist", auth ,async (req, res) => {
-
+router.get("/get-wishlist", auth, async (req, res) => {
   const result = await getWishlist(req.user);
 
   if (result.error) {
     return res.status(400).send("Error getting information");
   }
 
-  res.send(result);
+  const filterdData = [];
+  result.forEach((x) => {
+    filterdData.push({
+      createdAt: x.createdAt,
+      gameID: x.gameID,
+      title: x.title,
+    });
+  });
+
+  res.send(filterdData);
 });
 
 module.exports = router;

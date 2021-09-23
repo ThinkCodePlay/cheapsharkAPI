@@ -7,7 +7,7 @@
     "start": "node index.js",
     "dev": "env-cmd -f ./config/.env nodemon index.js",
     "test": "env-cmd -f ./config/test.env jest --watch --runInBand",
-    "mongo": "D:/Documents/mongodb/bin/mongod.exe --dbpath=D:/Documents/mongodb-data"
+    "mongo": "D:/Documents/Web-Dev/mongodb/bin/mongod.exe --dbpath=D:/Documents/Web-Dev/mongodb-data"
   },
   "jest": {
     "testEnvironment": "node"
